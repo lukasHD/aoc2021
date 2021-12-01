@@ -1,6 +1,7 @@
 # aoc.py
 from typing import List
-from itertools import tee
+from itertools import tee, islice
+from collections import deque
 
 def input_as_string(filename:str) -> str:
     """returns the content of the input file as a string"""
@@ -23,3 +24,16 @@ def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
+
+
+def sliding_window_iter(iterable, size):
+    """..."""
+    iterable = iter(iterable)
+    window = deque(islice(iterable, size), maxlen=size)
+    for item in iterable:
+        yield tuple(window)
+        window.append(item)
+    if window:  
+        # needed because if iterable was already empty before the `for`,
+        # then the window would be yielded twice.
+        yield tuple(window)
