@@ -125,7 +125,7 @@ def part2(fname: str, printDebug = False):
     
 
 if __name__ == '__main__':
-    print("\n")
+    print("--- Day 3: Binary Diagnostic ---\n")
     part1("day03/test.txt", True)
     part1("day03/input.txt")
     part2("day03/test.txt", True)
