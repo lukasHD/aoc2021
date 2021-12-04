@@ -13,6 +13,8 @@ class BingoCard:
 
     def __init__(self, in_array, id_):
         print("__init__ {}  {}".format(in_array, id_))
+        self.numbers = dict()
+        self.called = dict()
         print(self.numbers)
         print(self.called)
         self.size = len(in_array)
@@ -72,7 +74,9 @@ class BingoCard:
             for pos in range(self.size):
                 if self.called[(line, pos)]:
                     non_called += self.array_rep[line][pos]
-        return non_called*number
+        result = non_called*number
+        print("{} * {} = {}".format(non_called, number, result))
+        return result
 
 
 def parse_input(lines):
@@ -103,12 +107,12 @@ def alg1(lines, printDebug):
         a.pretty() 
     # numbers = [99, 22, 13, 17, 11, 0]
     # numbers = [99, 0, 24, 7, 5, 19]
-    for call in numbers[:2]:
+    for call in numbers:
         print("Calling Number {}".format(call))
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         for card in bingo_cards:
             bingo = card.call_number_return_bingo(call)
-            card.pretty()
+            # card.pretty()
             if bingo:
                 print("B I N G O")
                 card.pretty()
