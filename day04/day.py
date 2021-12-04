@@ -72,10 +72,11 @@ class BingoCard:
         non_called = 0
         for line in range(self.size):
             for pos in range(self.size):
-                if self.called[(line, pos)]:
+                if not self.called[(line, pos)]:
+                    print(self.array_rep[line][pos], end=' + ')
                     non_called += self.array_rep[line][pos]
         result = non_called*number
-        print("{} * {} = {}".format(non_called, number, result))
+        print(" --> {} * {} = {}".format(non_called, number, result))
         return result
 
 
@@ -109,7 +110,6 @@ def alg1(lines, printDebug):
     # numbers = [99, 0, 24, 7, 5, 19]
     for call in numbers:
         print("Calling Number {}".format(call))
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         for card in bingo_cards:
             bingo = card.call_number_return_bingo(call)
             # card.pretty()
@@ -118,7 +118,6 @@ def alg1(lines, printDebug):
                 card.pretty()
                 result = card.calc_result(call)
                 return result
-        print()
     return result
 
 
@@ -147,6 +146,6 @@ if __name__ == '__main__':
     print("--- Day 4: Giant Squid ---\n")
     # parse_input(helper.input_as_lines("day04/test.txt"))
     part1("day04/test.txt", True)
-    # part1("day04/input.txt")
+    part1("day04/input.txt")
     # part2("day04/test.txt", True)
     # part2("day04/input.txt")
