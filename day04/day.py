@@ -12,23 +12,23 @@ class BingoCard:
     id = 0
 
     def __init__(self, in_array, id_):
-        print("__init__ {}  {}".format(in_array, id_))
+        # print("__init__ {}  {}".format(in_array, id_))
         self.numbers = dict()
         self.called = dict()
-        print(self.numbers)
-        print(self.called)
+        # print(self.numbers)
+        # print(self.called)
         self.size = len(in_array)
         self.id = id_
         self.array_rep = in_array
         for i, line in enumerate(in_array):
             for j, number in enumerate(line):
-                print(number, end=', ')
+                # print(number, end=', ')
                 self.numbers[number] = (i, j)
-        print()
+        # print()
         for pos in self.numbers.values():
             self.called[pos] = False
-        print(self.numbers.keys())
-        print("_____________________________________________________")
+        # print(self.numbers.keys())
+        # print("_____________________________________________________")
         
     def pretty(self):
         print("I am Bingo-Card {}".format(self.id))
@@ -49,7 +49,7 @@ class BingoCard:
         try:
             pos = self.numbers[number]
         except KeyError:
-            print ("Not in my Board")
+            # print ("Not in my Board")
             return False
         self.called[pos] = True
         # check for bingo in lines 
@@ -103,7 +103,6 @@ def alg1(lines, printDebug):
     bingo_cards = []
     for id, card_array in enumerate(bingo_cards_array):
         bingo_cards.append(BingoCard(deepcopy(card_array), id+1))
-    print(bingo_cards)
     for a in bingo_cards:
         a.pretty() 
     # numbers = [99, 22, 13, 17, 11, 0]
