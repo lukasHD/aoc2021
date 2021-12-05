@@ -1,0 +1,12 @@
+{
+    "python.testing.pytestEnabled": false,
+    "python.linting.enabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./day__",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.unittestEnabled": true
+}

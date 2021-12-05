@@ -121,7 +121,42 @@ def alg1(lines, printDebug):
 
 
 def alg2(data, printDebug):
-    return 0
+    result = None
+    bingo_cards_array, numbers = parse_input(data)
+    bingo_cards = []
+    for id, card_array in enumerate(bingo_cards_array):
+        bingo_cards.append(BingoCard(deepcopy(card_array), id+1))
+    for a in bingo_cards:
+        a.pretty() 
+    # numbers = [99, 22, 13, 17, 11, 0]
+    # numbers = [99, 0, 24, 7, 5, 19]
+    winners = []
+    for call in numbers:
+        print("Calling Number {}".format(call))
+        
+        for card in bingo_cards:
+            if card in winners:
+                if printDebug: print("Skip Card {}".format(card.id))
+                continue
+            bingo = card.call_number_return_bingo(call)
+            # card.pretty()
+            if bingo:
+                print("B I N G O !  on card {}".format(card.id))
+                #card.pretty()
+                result = card.calc_result(call)
+                winners.append(card)
+                # return result
+        if printDebug: print([card.id for card in winners], sep = ', ')
+        if printDebug: print([card.id for card in bingo_cards], sep = ', ')
+        if printDebug: print(bingo_cards)
+        bingo_cards = list(filter(lambda c: c.id not in [x.id for x in winners], bingo_cards))
+        if printDebug: print([card.id for card in bingo_cards], sep = ', ')
+        if printDebug: print(bingo_cards)
+        if len(bingo_cards) == 0:
+            print("No Bingo-cards left")
+            break
+
+    return result
 
 
 def part1(fname: str, printDebug = False):
@@ -144,7 +179,7 @@ def part2(fname: str, printDebug = False):
 if __name__ == '__main__':
     print("--- Day 4: Giant Squid ---\n")
     # parse_input(helper.input_as_lines("day04/test.txt"))
-    part1("day04/test.txt", True)
-    part1("day04/input.txt")
-    # part2("day04/test.txt", True)
-    # part2("day04/input.txt")
+    # part1("day04/test.txt", True)
+    # part1("day04/input.txt")
+    part2("day04/test.txt", True)
+    part2("day04/input.txt")
