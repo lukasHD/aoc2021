@@ -4,7 +4,7 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./day05",
+        "./day06",
         "-p",
         "test_*.py"
     ],
