@@ -3,6 +3,13 @@ from typing import List
 from itertools import tee, islice
 from collections import deque
 
+
+def single_line_as_ints(filename :str) -> List[int]:
+    """returns the content of the first line of the input file as a list of ints"""
+    with open(filename) as f:
+        return list(map(int, f.read().rstrip("\n").split(',')))
+
+
 def input_as_string(filename:str) -> str:
     """returns the content of the input file as a string"""
     with open(filename) as f:
