@@ -42,11 +42,53 @@ def alg1(data, printDebug):
     return count_easy
 
 
-def alg2(data, printDebug):
+def translate(el, onepattern, fourpattern): 
     """With a little bit of help from my reddit friends:
     https://www.reddit.com/r/adventofcode/comments/rbj87a/comment/hnp38wn/?utm_source=share&utm_medium=web2x&context=3
     """
-    return 0
+    el = set(el)
+    if len(el) == 2:
+        return 1
+    elif len(el) == 4:
+        return 4
+    elif len(el) == 3:
+        return 7
+    elif len(el) == 7:
+        return 8
+    elif len(el) == 6:
+        if len(el & onepattern) == 1:
+            return 6
+        elif len(el & fourpattern) == 4:
+            return 9
+        else:
+            return 0
+    elif len(el) == 5:
+        if len(el & onepattern) == 2:
+            return 3
+        elif len(el & fourpattern) == 2:
+            return 2
+        else:
+            return 5
+    else:
+        print("unreachable Error")
+        raise(ValueError)
+
+def alg2(data, printDebug):
+    result = 0
+    for input, output in parse_input(data, printDebug):
+        if printDebug: print("======================================================================================================================================")
+        input = [set(x) for x in  input]
+        fourpattern = list(filter(lambda x: len(x) == 4, input))[0]
+        onepattern = list(filter(lambda x: len(x) == 2, input))[0]
+        # for number in input:
+        #     print(number, end="")
+        number = ""
+        for el in output:
+            num = translate(el, onepattern, fourpattern)
+            number = number + str(num)
+        if printDebug: print("{} => {}".format(output, number))
+        result += int(number)
+    return result
 
 
 def part1(fname: str, printDebug = False):
@@ -73,5 +115,5 @@ if __name__ == '__main__':
     print("--- Day 8: Seven Segment Search ---\n")
     part1(test_fname, True)
     part1(input_fname)
-    # part2(test_fname, True)
-    # part2(input_fname)
+    part2(test_fname, True)
+    part2(input_fname)
