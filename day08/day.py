@@ -29,13 +29,13 @@ def parse_input(data, printDebug = False):
         input_, output_ = line.split(" | ")
         input = input_.split(" ")
         output = output_.split(" ")
-        print(input, output)
+        if printDebug: print(input, output)
         yield input, output
 
 def alg1(data, printDebug):
     """In the output values, how many times do digits 1, 4, 7, or 8 appear?"""
     count_easy = 0
-    for input, output in parse_input(data, printDebug):
+    for _, output in parse_input(data, printDebug):
         for el in output:
             if len(el) in [2, 4, 3, 7]:
                 count_easy += 1
@@ -43,6 +43,9 @@ def alg1(data, printDebug):
 
 
 def alg2(data, printDebug):
+    """With a little bit of help from my reddit friends:
+    https://www.reddit.com/r/adventofcode/comments/rbj87a/comment/hnp38wn/?utm_source=share&utm_medium=web2x&context=3
+    """
     return 0
 
 
