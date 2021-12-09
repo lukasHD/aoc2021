@@ -12,7 +12,7 @@ class Point:
     y: int = 0
 
     def __str__(self) -> str:
-        return "[{:>3},{:>3}]".format(self.x, self.y)
+        return f"[{self.x:>3},{self.y:>3}]"
 
     def __hash__(self) -> int:
         return hash((self.x, self.y))
@@ -37,28 +37,28 @@ def get_straight_neighbours(data, point: Point):
     return neighbours
 
 def get_min_lower_neighbor_point(data, point :Point):
-    minNeighbor = Point()
-    minValue = 10
-    pointValue = data[point.x][point.y]
+    min_neighbor = Point()
+    min_value = 10
+    point_value = data[point.x][point.y]
     for delta in [Point(1,0), Point(-1,0), Point(0,1), Point(0,-1)]:
         try:
             px = point.x + delta.x
             py = point.y + delta.y
             if px < 0 or py < 0:
                 continue
-            if data[px][py] < minValue:
-                minNeighbor = Point(px,py)
-                minValue = data[px][py]
+            if data[px][py] < min_value:
+                min_neighbor = Point(px,py)
+                min_value = data[px][py]
         except IndexError:
             continue
-    if minValue < pointValue:
-        return minNeighbor
+    if min_value < point_value:
+        return min_neighbor
     return None
 
 def flow_down(data, point: Point, printDebug = False):
     if printDebug: print(point, end=" ")
     next_point = get_min_lower_neighbor_point(data, point)
-    if next_point == None:
+    if next_point is None:
         return point
     return flow_down(data, next_point, printDebug)
 
@@ -76,7 +76,7 @@ def alg1(data, printDebug):
         for y, el in enumerate(line):
             neighbours = get_straight_neighbours(floormap, Point(x,y))
             if printDebug: print(neighbours)
-            is_minimum = all([el < x for x in neighbours])
+            is_minimum = all(el < x for x in neighbours)
             if is_minimum:
                 result += (el + 1)
     return result
@@ -84,7 +84,8 @@ def alg1(data, printDebug):
 
 def alg2(data, printDebug):
     """FLow down until we are in a minimum and then add point to size of bassin
-    Locations of height 9 do not count as being in any basin, and all other locations will always be part of exactly one basin.
+    Locations of height 9 do not count as being in any basin, and all other
+    locations will always be part of exactly one basin.
     """
     basins = defaultdict(int)
     floormap = parse_line(data=data)
@@ -94,7 +95,7 @@ def alg2(data, printDebug):
             if el == 9:
                 continue
             basin_point = flow_down(floormap, Point(x,y), printDebug)
-            if printDebug: print("{} --> {}".format(Point(x,y), basin_point))
+            if printDebug: print(f"{Point(x,y)} --> {basin_point}")
             basins[basin_point] += 1
 
     result = 1
@@ -108,21 +109,21 @@ def alg2(data, printDebug):
 
 def part1(fname: str, printDebug = False):
     print("=== PART 1 ===")
-    print("-- {} --".format(fname))
+    print(f"-- {fname} --")
     result = 0
     result = alg1(helper.input_as_lines(fname), printDebug)
-    print("Result = {}".format(result))
+    print(f"Result = {result}")
     print()
 
 def part2(fname: str, printDebug = False):
     print("=== PART 2 ===")
-    print("-- {} --".format(fname))
+    print(f"-- {fname} --")
     result = 0
     result = alg2(helper.input_as_lines(fname), printDebug)
-    print("Result = {}".format(result))
+    print(f"Result = {result}")
     print()
-    
-    
+
+
 
 if __name__ == '__main__':
     test_fname = os.path.join(os.path.dirname(__file__), 'test.txt')
