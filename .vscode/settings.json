@@ -8,5 +8,7 @@
         "-p",
         "test_*.py"
     ],
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "python.formatting.provider": "autopep8",
+    "python.linting.pylintEnabled": true
 }

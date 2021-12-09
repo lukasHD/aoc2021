@@ -21,7 +21,6 @@ def parse_line(data):
     formated = []
     for line in data:
         formated.append(list(map(int,list(line))))
-    print(type(formated[0][0]))
     return formated
 
 def get_straight_neighbours(data, point: Point):
@@ -52,17 +51,16 @@ def get_min_lower_neighbor_point(data, point :Point):
                 minValue = data[px][py]
         except IndexError:
             continue
-    # print("minValue={}, pointValue={}".format(minValue, pointValue))
     if minValue < pointValue:
         return minNeighbor
     return None
 
-def flow_down(data, point: Point):
-    print(point, end=" ")
+def flow_down(data, point: Point, printDebug = False):
+    if printDebug: print(point, end=" ")
     next_point = get_min_lower_neighbor_point(data, point)
     if next_point == None:
         return point
-    return flow_down(data, next_point)
+    return flow_down(data, next_point, printDebug)
 
 def pretty(data):
     for line in data:
@@ -77,7 +75,7 @@ def alg1(data, printDebug):
     for x, line in enumerate(floormap):
         for y, el in enumerate(line):
             neighbours = get_straight_neighbours(floormap, Point(x,y))
-            print(neighbours)
+            if printDebug: print(neighbours)
             is_minimum = all([el < x for x in neighbours])
             if is_minimum:
                 result += (el + 1)
@@ -95,15 +93,15 @@ def alg2(data, printDebug):
         for y, el in enumerate(line):
             if el == 9:
                 continue
-            basin_point = flow_down(floormap, Point(x,y))
-            print("{} --> {}".format(Point(x,y), basin_point))
+            basin_point = flow_down(floormap, Point(x,y), printDebug)
+            if printDebug: print("{} --> {}".format(Point(x,y), basin_point))
             basins[basin_point] += 1
 
     result = 1
     basin_sizes = basins.values()
-    print(basin_sizes)
+    if printDebug: print(basin_sizes)
     for n in list(sorted(basin_sizes))[-3:]:
-        print(n)
+        if printDebug: print(n)
         result *= n
     return result
 
@@ -123,6 +121,7 @@ def part2(fname: str, printDebug = False):
     result = alg2(helper.input_as_lines(fname), printDebug)
     print("Result = {}".format(result))
     print()
+    
     
 
 if __name__ == '__main__':
