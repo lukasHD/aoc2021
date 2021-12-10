@@ -8,22 +8,14 @@ import helper
 
 
 def alg1(data, print_debug):
-    """Runs algo for first part of the day"""
     return 0
 
 
 def alg2(data, print_debug):
-    """Runs algo for second part of the day"""
     return 0
 
 
 def part1(fname: str, print_debug = False):
-    """Wrapper for the first Part. Loads data and sets debug output
-
-    Args:
-        fname (str): filename of inputfile
-        print_debug (bool, optional): print debug output. Defaults to False.
-    """
     print("=== PART 1 ===")
     print(f"-- {fname} --")
     result = 0
@@ -32,12 +24,6 @@ def part1(fname: str, print_debug = False):
     print()
 
 def part2(fname: str, print_debug = False):
-    """Wrapper for the second Part. Loads data and sets debug output
-
-    Args:
-        fname (str): filename of inputfile
-        print_debug (bool, optional): print debug output. Defaults to False.
-    """
     print("=== PART 2 ===")
     print(f"-- {fname} --")
     result = 0
