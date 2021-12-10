@@ -3,7 +3,39 @@ import os
 import helper
 
 
-def alg1(lines, printDebug):
+def alg1(data, printDebug):
+    counter = {}
+    illegal = []
+    for line in data:
+        counter["["] = 0
+        counter["{"] = 0
+        counter["("] = 0
+        counter["<"] = 0
+        for el in line:
+            # print(f"{el} ", end="")
+            if el == "[":
+                counter["["] += 1
+            elif el == "]":
+                counter["["] -= 1
+            elif el == "{":
+                counter["{"] += 1
+            elif el == "]":
+                counter["{"] -= 1
+            elif el == "(":
+                counter["("] += 1
+            elif el == ")":
+                counter["("] -= 1
+            elif el == "<":
+                counter["<"] += 1
+            elif el == ">":
+                counter["<"] -= 1
+            print(counter.values())
+            if any(x < 0 for x in counter.values()):
+                print(f"illegal character {el} found. Adding to List")
+                illegal.append(el)
+                continue
+        print()
+    print(illegal)
     return 0
 
 
@@ -34,6 +66,6 @@ if __name__ == '__main__':
 
     print("\n")
     part1(test_fname, True)
-    part1(input_fname)
-    part2(test_fname, True)
-    part2(input_fname)
+    # part1(input_fname)
+    # part2(test_fname, True)
+    # part2(input_fname)
