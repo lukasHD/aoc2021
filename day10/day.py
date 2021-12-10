@@ -4,6 +4,7 @@ import helper
 
 
 def alg1(data, printDebug):
+    """https://riptutorial.com/python/example/25649/parsing-parentheses"""
     counter = {}
     illegal = []
     for line in data:
