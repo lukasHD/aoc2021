@@ -39,3 +39,21 @@ def sliding_window_iter(iterable, size):
         # needed because if iterable was already empty before the `for`,
         # then the window would be yielded twice.
         yield tuple(window)
+
+def pretty_dict(my_dict: dict[(int, int),int]):
+    x_values = [el[0] for el in my_dict.keys()]
+    y_values = [el[1] for el in my_dict.keys()]
+    x_min = min(x_values)
+    x_max = max(x_values)
+    y_min = min(y_values)
+    y_max = max(y_values)
+
+    for y in range(y_min-1, y_max+2):
+        for x in range(x_min-1, x_max+2):
+            if my_dict[x,y] > 0: 
+                char = '#'
+            else:
+                char = '.'
+            print(char, end='')
+        print()
+    print()
