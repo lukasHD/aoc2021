@@ -3,13 +3,38 @@
 """
 
 import os
+from collections import defaultdict
+from dataclasses import dataclass
 
 import helper
 
 
-def alg1(data, print_debug):
-    return 0
+def parse_data(data, print_debug):
+    # count the number of holes lining up
+    paper_coordinates = defaultdict(int)
+    instuctions = []
+    for line in data:
+        if "," in line:
+            x,y = line.split(",")
+            x = int(x)
+            y = int(y)
+            paper_coordinates[(x,y)] += 1
+        if "fold along" in line:
+            axis, pos = line.strip("fold along ").split("=")
+            instuctions.append([axis, int(pos)])
+    if print_debug: print(f"paper_coordinates={paper_coordinates}\n\ninstuctions={instuctions}\n")
+    return paper_coordinates, instuctions
 
+
+def fold_paper(dir: str, pos: int):
+    print(f"Try to fold along {dir}={pos}")
+
+
+def alg1(data, print_debug):
+    paper_coordinates, instuctions = parse_data(data, print_debug)
+    inst = instuctions[0]
+    fold_paper(inst[0], inst[1])
+    return 0
 
 def alg2(data, print_debug):
     return 0
@@ -38,6 +63,6 @@ if __name__ == '__main__':
 
     print("\n")
     part1(test_fname, True)
-    part1(input_fname)
-    part2(test_fname, True)
-    part2(input_fname)
+    # part1(input_fname)
+    # part2(test_fname, True)
+    # part2(input_fname)
