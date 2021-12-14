@@ -52,8 +52,10 @@ def pretty_dict(my_dict: dict[(int, int),int]):
         for x in range(x_min-1, x_max+2):
             if my_dict[x,y] > 0: 
                 char = '@'
+                char = '██'
             else:
                 char = ' '
+                char = '░░'
             print(char, end='')
         print()
     print()
