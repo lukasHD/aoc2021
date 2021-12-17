@@ -64,11 +64,12 @@ def parse_bits(data, version_sum = 0):
         # parse all subpackages 
         subs = []
         value, other_subpackages, version_sum = parse_bits(sub_packages, version_sum)
-        subs.append(str(value))
+        subs.append(value)
         while len(other_subpackages) != 0 and int(other_subpackages, 2) != 0:
             sub_packages = copy(other_subpackages)
             value, other_subpackages, version_sum = parse_bits(sub_packages, version_sum)
-            subs.append(str(value))
+            # subs.append(str(value))
+            subs.append(value)
         print(f"subs={subs}, rest={rest}")
         return subs, rest, version_sum
     if length_type == "1":
@@ -81,7 +82,8 @@ def parse_bits(data, version_sum = 0):
         subs = []
         for _ in range(number):
             value, rest, version_sum = parse_bits(rest, version_sum)
-            subs.append(str(value))
+            # subs.append(str(value))
+            subs.append(value)
         print(f"subs={subs}, rest={rest}")
         return subs, rest, version_sum
 
@@ -124,6 +126,6 @@ if __name__ == '__main__':
 
     print("--- Day 16: Packet Decoder ---\n")
     part1(test_fname, True)
-    # part1(input_fname)
+    part1(input_fname)
     # part2(test_fname, True)
     # part2(input_fname)
