@@ -55,8 +55,6 @@ def parse_date(line) -> Target:
     x_min, x_max = list(map(int, x_str.split("=")[1].split("..")))
     y_min, y_max = list(map(int, y_str.split("=")[1].split("..")))
     target = Target(x_min, x_max, y_min, y_max)
-    # print(target)
-    # print(f"x = [{x_min}, {x_max}] \t y = [{y_min}, {y_max}]")
     return target
 
 
@@ -107,21 +105,15 @@ def shoot(target: Target, vector = (7,2), print_debug = False):
 def alg1(data, print_debug):
     target = parse_date(data[0])
     # draw_game(target)
-    # shoot(target, (7,2))
-    # shoot(target, (6,9), True)
-    # shoot(target, (17,135), False)
-    # return 0
     max_height = 0
     best_v_y = None
     best_v_x = None
-    # hit_counter = 0
     for v_x in range(1, 300):
         for v_y in range(-150, 300):
             # print(f"Shoot with vector ({v_x}, {v_y})")
             hit, trajet = shoot(target, (v_x, v_y), print_debug)
             if hit:
                 this_max_height = max(list(zip(*trajet))[1])
-                # hit_counter += 1
                 if this_max_height > max_height:
                     max_height = this_max_height
                     best_v_y = v_y
@@ -129,7 +121,6 @@ def alg1(data, print_debug):
                 if print_debug: print(f"Shoot with vector ({v_x:>3}, {v_y:>3})", end="")
                 if print_debug: print(f" \t--- HIT MAX HEIGHT {this_max_height}")
     print(f"max height: {max_height} reached for velocity=({best_v_x}, {best_v_y})")
-    # print(f"a total of {hit_counter} shots can hit")
     return max_height
 
 

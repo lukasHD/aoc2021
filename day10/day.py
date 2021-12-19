@@ -109,7 +109,7 @@ if __name__ == '__main__':
     test_fname = os.path.join(os.path.dirname(__file__), 'test.txt')
     input_fname = os.path.join(os.path.dirname(__file__), 'input.txt')
 
-    print("\n")
+    print("--- Day 10: Syntax Scoring ---\n")
     part1(test_fname, True)
     part1(input_fname)
     part2(test_fname, True)
