@@ -3,8 +3,14 @@
 """
 
 import os
+from queue import PriorityQueue
 
 import helper
+
+# inspiration from here ? https://github.com/Farbfetzen/Advent_of_Code/blob/main/python/2021/day15.py
+
+def manhattan_distance(a, b) -> int:
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
 def alg1(data, print_debug):
