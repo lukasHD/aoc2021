@@ -8,6 +8,7 @@ import helper
 
 from collections import defaultdict
 from dataclasses import dataclass
+from copy import deepcopy
 
 @dataclass
 class Point():
@@ -19,7 +20,8 @@ class Point():
 
 class TrenchMap():
 
-    translate = {'#': 1, '.': 0, 1: '#', 0: '.'}
+    translate = {'#': 1, '.': 0, 1: '#', 0: '·'}
+    INNER_BORDER = 2
 
     def __init__(self, algo_array, map_array) -> None:
         self.algo = algo_array
@@ -28,6 +30,7 @@ class TrenchMap():
         self.min_y = 0
         self.max_x = 0
         self.max_y = 0
+        self.i = 0
         for x, line in enumerate(map_array):
             for y, char in enumerate(line):
                 self.min_x = min(self.min_x, x)
@@ -37,16 +40,20 @@ class TrenchMap():
                 self.map[(x,y)] = self.translate[char]
 
     def pretty(self) -> None:
-        for x in range(self.min_x - 2, self.max_x + 3):
-            for y in range(self.min_y - 2, self.max_y + 3):
+        for x in range(self.min_x - self.INNER_BORDER, self.max_x + self.INNER_BORDER + 1):
+            for y in range(self.min_y - self.INNER_BORDER, self.max_y + self.INNER_BORDER + 1):
                 print(self.translate[self.map[(x,y)]], end="")
             print()
         print()
 
     def step(self) -> None:
-        new_array = defaultdict(int)
-        for x in range(self.min_x - 1, self.max_x + 2):
-            for y in range(self.min_y - 1, self.max_y + 2):
+        # new_array = defaultdict(int)
+        if self.i % 2 == 0:
+            new_array = defaultdict(lambda: 1)
+        else:
+            new_array = defaultdict(lambda: 0)
+        for x in range(self.min_x - self.INNER_BORDER, self.max_x + self.INNER_BORDER + 1):
+            for y in range(self.min_y - self.INNER_BORDER, self.max_y + self.INNER_BORDER + 1):
                 # all neighbours
                 # build bit string
                 bitstring = ""
@@ -54,8 +61,20 @@ class TrenchMap():
                     for dy in [-1, 0, 1]:
                         bitstring += str(self.map[(x+dx, y+dy)])
                 new_array[(x, y)] = self.translate[self.algo[int(bitstring, 2)]]
-                print(bitstring)
-                print(new_array)
+        self.map = deepcopy(new_array)
+        self.min_x -= self.INNER_BORDER
+        self.min_y -= self.INNER_BORDER
+        self.max_x += self.INNER_BORDER
+        self.max_y += self.INNER_BORDER
+        self.i += 1
+
+    def count_lit(self) -> int:
+        counter = 0
+        for x in range(self.min_x - self.INNER_BORDER, self.max_x + self.INNER_BORDER + 1):
+            for y in range(self.min_y - self.INNER_BORDER, self.max_y + self.INNER_BORDER + 1):
+                if self.map[(x, y)] == 1:
+                    counter += 1
+        return counter
                 
 
 
@@ -65,11 +84,19 @@ def alg1(data, print_debug):
     trench_map = TrenchMap(data[0], data[2:])
     trench_map.pretty()
     trench_map.step()
-    return 0
+    trench_map.pretty()
+    trench_map.step()
+    trench_map.pretty()
+    result = trench_map.count_lit()
+    return result
 
 
 def alg2(data, print_debug):
-    return 0
+    trench_map = TrenchMap(data[0], data[2:])
+    for i in range(50):
+        trench_map.step()
+    result = trench_map.count_lit()
+    return result
 
 
 def part1(fname: str, print_debug = False):
@@ -95,6 +122,6 @@ if __name__ == '__main__':
 
     print("--- Day 20: Trench Map ---\n")
     part1(test_fname, True)
-    # part1(input_fname)
-    # part2(test_fname, True)
-    # part2(input_fname)
+    part1(input_fname)
+    part2(test_fname, True)
+    part2(input_fname)
